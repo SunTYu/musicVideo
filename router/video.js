@@ -2,7 +2,7 @@ const multer = require('multer');
 const upload = multer({dest: 'temp'});
 const router = require('./base');
 const {videoModel} = require('../model/models').col;
-const baseurl = 'http://localhost:3000'
+const baseurl = 'http://mv.qvjunping.me'
 
 router.get('/video/:dirUrl', async (req, res) => {
     let page = req.query.page || 0;
