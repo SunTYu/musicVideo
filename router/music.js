@@ -4,16 +4,10 @@ const router = require('./base');
 const {musicModel} = require('../model/models').col;
 const baseurl = 'localhost:3000'
 
-router.get('/music', async (req, res) => {
-    let page = req.query.page || 0;
-    let size = req.query.size || 10;
-    let musiclist = await musicModel.find({}).skip(page).limit(size);
-    res.send(musiclist);
-})
 router.post('/music', upload.single('file'), (req, res) => {
     //let reg = /\.[^\.]+$/;
     console.log(req.file);
-    let video = {
+    let music = {
         name: req.body.name || req.file.originalname,
         discrip: req.body.discrip,
         url: baseurl + '/' + req.file.filename,

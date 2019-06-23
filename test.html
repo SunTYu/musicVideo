@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <input type="text">
+  <form action="/addMusicDir" method="POST">音乐目录名<input name="name" type="text"/>简介<input name="discrip" type="text"><input type="submit"></form>
+  <form action="/addVideoDir" method="POST">视频目录名<input name="name" type="text"/>简介<input name="discrip" type="text"><input type="submit"></form>
+  <form action="/video" method="GET">页<input name="page" type="text">大小<input name="size" type="text"><input type="submit"></form>
+  <input class="addfile" type="file" name="file">
+  <button onclick="submit()">上传</button><br>
+  输入示例视频地址测试下方是否能播放<input class="videourl" type='text'><br>
+  <video class="exampleVideo" src="" controls></video>
+  <div>
+      <select class="getDir">
+        <option value ="music">Music</option>
+        <option value ="video">Video</option>
+      </select>
+      <div class="result">
+      </div>
+  </div>
+  <script>
+    let file = ''
+    let fileName = ''
+    let addfile = document.querySelector(".addfile");
+    let videourl = document.querySelector(".videourl");
+    let video = document.querySelector(".exampleVideo");
+    let dir = document.querySelector(".getDir");
+    let result = document.querySelector(".result");
+    dir.addEventListener('change', getDir);
+    videourl.addEventListener('change', exampleUrl);
+    addfile.addEventListener('change', changeFile);
+    function submit() {
+      let data = new FormData()
+      data.append('fileName', fileName)
+      data.append('file', file)
+      axios({
+        method: 'post',
+        timeout: 2000,
+        url: '/video',
+        data: data
+      })
+        .then(response => {
+          console.log(response.data);
+          videourl.value = response.data.url;
+          video.src = response.data.url;
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
+    function changeFile(e) {
+      file = e.target.files.item(0)
+      if (file === null) {
+        return
+      }
+      fileName = file.name
+    }
+    function exampleUrl(e) {
+      video.src = this.value;
+    }
+    function getDir(e) {
+      if(this.value == 'music') {
+        axios({
+        method: 'get',
+        timeout: 2000,
+        url: '/' + this.value,
+      })
+        .then(response => {
+          console.log(response.data)
+          result.innerHTML = JSON.stringify(response.data);
+        })
+        .catch(error => {
+          console.log(error)
+        })
+      }
+    }
+  </script>
+</body>
+</html>

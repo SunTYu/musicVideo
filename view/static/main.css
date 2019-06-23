@@ -1,0 +1,19 @@
+* {
+    padding: 0;
+    margin: 0;
+    color: aliceblue;
+}
+body {
+    height: 100vh;
+    width: 100vw;
+    background-image: url('http://static.qvjunping.me/b3d1fc4b6280b710c05fedad085aa7c3.jpeg');
+}
+.background {
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+.top span{
+    font-size: 4vh;
+    padding: 0 10px;
+}
