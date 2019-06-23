@@ -12,4 +12,4 @@ app.get('/', (req, res) => {
 
 app.use('/', music);
 app.use('/', video);
-app.listen(80);
+app.listen(3000);
